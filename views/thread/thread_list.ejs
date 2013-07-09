@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../common/common-head.ejs %>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <% include ../common/common-nav.ejs %>
+    <p id="name">ようこそ、<%= user.name %></p>
+    <ul>
+        <% for(var i=0, len=threads.length; i<len; i++) { %>
+            <li><a href=""><%= threads[i].title %></a></li>
+        <% } %>
+    </ul>
+  </body>
+</html>

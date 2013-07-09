@@ -1,0 +1,10 @@
+{
+    "databaseAuth" : {
+        "user": "forum",
+        "password": "yari-scanner7",
+        "database": "forum"
+    },
+    "sessionAuth" : {
+    },
+    "cookieHash" : ""
+}
