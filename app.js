@@ -38,11 +38,7 @@ app.post('/login', user.authorize);
 //スレッド一覧を表示
 app.get('/thread/list', thread.list);
 
-/*
-app.get('/thread/:title', thread.each);
-app.post('/thread/:title', thread.res);
-*/
-
+//各スレッドの表示・投稿
 app.get('/thread/thread', thread.each);
 app.post('/thread/thread', thread.res);
 

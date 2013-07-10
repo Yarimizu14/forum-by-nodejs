@@ -27,8 +27,12 @@ exports.each = function(req, res) {
     var thread_id = req.param('thread_id');
 
     var ress = resModel.createResDB();
+    
+    var q_data = {
+        thread_id : thread_id
+    };
 
-    ress.getResByThread(thread_id, function(results) {
+    ress.getResByThread(q_data, function(results) {
         var data = {
             thread_id : thread_id,
             title     : results[0].title,
@@ -53,7 +57,13 @@ exports.res = function(req, res) {
 
     var ress = resModel.createResDB();
 
-    ress.createRes(body, function(results) {
+    var q_data = {
+        user_id   : 1,
+        thread_id : thread_id,
+        body      : body,
+    };
+
+    ress.createRes(q_data, function(results) {
         var data = {
             thread_id : thread_id,
             results   : results
