@@ -25,16 +25,16 @@ exports.list = function(req, res){
  */
 exports.each = function(req, res) {
     var thread_id = req.param('thread_id');
-    var title = req.params.title;
 
     var ress = resModel.createResDB();
 
     ress.getResByThread(thread_id, function(results) {
-        var data = {};
-        console.log(results);
-        data.title = results[0].title;
-        data.results = results;
-        res.render('thread/thread', data);
+        var data = {
+            thread_id : thread_id,
+            title     : results[0].title,
+            results   : results
+        };
+       res.render('thread/thread', data);
     });
 };
 
@@ -43,18 +43,22 @@ exports.each = function(req, res) {
  *
  */
 exports.res = function(req, res) {
-    var title = req.param('title');
-    var body = req.param('body');
+    var thread_id = req.param('thread_id');
+    var title     = req.param('title');
+    var body      = req.param('body');
 
     console.log(title);
+    console.log(thread_id);
     console.log(body);
 
     var ress = resModel.createResDB();
 
     ress.createRes(body, function(results) {
-        var data = {};
-        data.title = title;
-        data.results = results;
-        res.render('thread/thread', data);
+        var data = {
+            thread_id : thread_id,
+            results   : results
+        };
+       //res.render('thread/thread?thread_id=' + thread_id, data);
+       res.redirect('thread/thread?thread_id=' + thread_id);
     });
 };
