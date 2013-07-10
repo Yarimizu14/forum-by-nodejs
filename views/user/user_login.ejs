@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% include ./common/common-head.ejs %>
+    <% include ../common/common-head.ejs %>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <% include ./common/common-nav.ejs %>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+    <% include ../common/common-nav.ejs %>
+    <form method="POST" action="/login">
+        <div>名前:
+            <input type="text" name="name">
+            <input type="text" name="pw">
+            <input type="submit" name="submit" value="POST">
+        </div>
+    </form>
+ </body>
 </html>

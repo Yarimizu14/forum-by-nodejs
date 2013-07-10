@@ -24,12 +24,12 @@ UserDB.prototype.authorizeUser = function(name, pw, callback) {
     console.log("authorizeUser");
     var q_str = 'SELECT * FROM users where name="' + name + '";';
     this.query(q_str, void 0, function (err, results, fields) {
-        console.log(results);
         if(results[0] !==  void 0 && results[0].pw === pw) {
             console.log("login successful!!");
-            callback(results[0]);
+            callback.success(results[0]);
         } else {
             console.log("login denied!!");
+            callback.error();
         };
     });
 

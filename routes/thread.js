@@ -1,13 +1,28 @@
 var userModel   = require('../model/users.js'),
-    resModel = require('../model/res.js');
-/*
- * GET users listing.
- */
+    threadModel = require('../model/thread.js'),
+    resModel    = require('../model/res.js');
 
+/*
+ * スレッド一覧の表示.
+ * GET /thread/thread_listc
+ */
 exports.list = function(req, res){
-  res.send("respond with a resource");
+    var ress    = resModel.createResDB();
+    var threads = threadModel.createThreadDB();
+
+    callback = function(threads_info) {
+        var data = {};
+        data.threads = threads_info;
+        console.log(data);
+        res.render('thread/thread_list', data);
+    };
+    threads.getAllThreads(callback);
 };
 
+/*
+ * 各スレッドの表示
+ * GET /thread/:title
+ */
 exports.each = function(req, res) {
     var title = req.params.title;
     var ress = resModel.createResDB();
@@ -20,7 +35,7 @@ exports.each = function(req, res) {
     });
 };
 
-exports.create = function(req, res) {
+exports.res = function(req, res) {
     var title = req.param('title');
     var body = req.param('body');
 
