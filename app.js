@@ -31,9 +31,11 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 
+//ログイン画面
 app.get('/login', user.login);
 app.post('/login', user.authorize);
 
+//スレッド一覧を表示
 app.get('/thread/list', thread.list);
 
 app.get('/thread/:title', thread.each);

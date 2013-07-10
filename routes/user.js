@@ -26,18 +26,12 @@ exports.authorize = function(req, res) {
         success : function(user_info) {
             var data = {};
             data.user = user_info;
-            var cbk = function(threads_info) {
-                data.threads = threads_info;
-                console.log(data);
-                res.render('thread/thread_list', data);
-            };
-            threads.getAllThreads(cbk);
+            res.redirect('/thread/list');
         },
         error : function() {
             res.render('user/user_login_fail', {});
         }
     };
-    
     //認証処理
     users.authorizeUser(name, pw, callback);
 };
