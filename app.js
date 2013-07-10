@@ -38,8 +38,13 @@ app.post('/login', user.authorize);
 //スレッド一覧を表示
 app.get('/thread/list', thread.list);
 
+/*
 app.get('/thread/:title', thread.each);
 app.post('/thread/:title', thread.res);
+*/
+
+app.get('/thread/thread', thread.each);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

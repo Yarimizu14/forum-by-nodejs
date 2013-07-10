@@ -21,8 +21,8 @@ ResDB.prototype.createRes = function(body, callback) {
  * getAllRess 
  * 指定したスレッドの全てのコメントを取得する関数 
  */
-ResDB.prototype.getResByThread = function(thread, callback) {
-    var q_str = 'select threads.title, res.body from threads,res where threads.title="' + thread + '";';
+ResDB.prototype.getResByThread = function(thread_id, callback) {
+    var q_str = 'select threads.title, res.body from threads,res where threads.forum_id=' + thread_id + ';';
     this.query(q_str, void 0, function (err, results, fields) {
         callback(results);
     });

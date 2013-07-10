@@ -21,20 +21,27 @@ exports.list = function(req, res){
 
 /*
  * 各スレッドの表示
- * GET /thread/:title
+ * GET /thread/thread?thread_id=
  */
 exports.each = function(req, res) {
+    var thread_id = req.param('thread_id');
     var title = req.params.title;
+
     var ress = resModel.createResDB();
 
-    ress.getResByThread(title, function(results) {
+    ress.getResByThread(thread_id, function(results) {
         var data = {};
-        data.title = title;
+        console.log(results);
+        data.title = results[0].title;
         data.results = results;
         res.render('thread/thread', data);
     });
 };
 
+/*
+ * スレッドに対するコメントを投稿
+ *
+ */
 exports.res = function(req, res) {
     var title = req.param('title');
     var body = req.param('body');

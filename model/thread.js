@@ -23,7 +23,6 @@ ThreadDB.prototype.getAllThreads = function(callback) {
         callback(results);
    });
 
-
 };
 
 function createThreadDB() {
