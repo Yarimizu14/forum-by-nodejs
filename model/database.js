@@ -25,6 +25,7 @@ Database.prototype._getClient = function() {
  */
 Database.prototype.query = function(query, params, callback) {
     var client = this._getClient();
+    console.log(query);
     return client.query(query, params, callback);
 };
 

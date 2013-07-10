@@ -39,11 +39,12 @@ app.get('/login', user.login);
 app.post('/login', user.authorize);
 
 //スレッド一覧を表示
-app.get('/thread/list', thread.list);
+app.get('/thread/list', thread.showList);
 
 //各スレッドの表示・投稿
-app.get('/thread/thread', thread.each);
-app.post('/thread/thread', thread.res);
+app.get('/thread/thread', thread.showThread);
+app.post('/thread/thread', thread.createRes);
+app.delete('/thread/delete_ajax', thread.deleteRes);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

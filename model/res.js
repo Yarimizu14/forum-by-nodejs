@@ -18,15 +18,43 @@ ResDB.prototype.createRes = function(q_data, callback) {
         callback(results);
     });
 }
+
+
+ResDB.prototype.deleteRes = function(q_data, callback) {
+     var q_str = 'delete from res where res_id=' + q_data.res_id + ";";
+    this.query(q_str, void 0, function (err, results, fields) {
+        console.log(results);
+        callback(results);
+    });
+}
+
 /*
  * getAllRess 
  * 指定したスレッドの全てのコメントを取得する関数 
  */
 ResDB.prototype.getResByThread = function(q_data, callback) {
-   var q_str = 'select res.body, threads.title, threads.description from threads, res where threads.thread_id=' + q_data.thread_id + ' AND res.thread_id='  + q_data.thread_id + ';'
-   console.log(q_str);
-    this.query(q_str, void 0, function (err, results, fields) {
-        callback(results);
+    var self = this;
+    async.parallel({
+        getThreadInfo : function(cbk) {
+            var q_str = 'select threads.title, threads.description from threads where threads.thread_id=' + q_data.thread_id + ';'
+            self.query(q_str, void 0, function (err, results, fields) {
+                cbk(null, results);
+            });
+        },
+        getResInfo   : function(cbk) {
+            var q_str = 'select res.res_id, res.body from res where res.thread_id=' + q_data.thread_id + ';'
+            self.query(q_str, void 0, function (err, results, fields) {
+                cbk(null, results);
+            });
+        }
+    }, function(err, results) {
+        console.log(results);
+        callback({
+            thread_id  : q_data.thread_id,
+            title      : results.getThreadInfo[0].title,
+            description: results.getThreadInfo[0].description,
+            res        : results.getResInfo
+        });
     });
 };
 

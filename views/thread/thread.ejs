@@ -6,10 +6,13 @@
   </head>
   <body>
     <% include ../common/common-nav.ejs %>
-    <ul>
-        <% if(results.length !== 0) { %>
-            <% for(var i=0, len=results.length; i<len; i++) { %>
-                <li><%= results[i].body %></li>
+    <p><%= title %></p>
+    <p>投稿数　<%= res.length %></p>
+    <p><%= description %></p>
+    <ul id="resList">
+        <% if(res.length !== 0) { %>
+            <% for(var i=0, len=res.length; i<len; i++) { %>
+                <li class="resList_each" data-id="<%= res[i].res_id %>"><%= res[i].body %></li>
             <% } %>
         <% } %>
     </ul>
@@ -19,5 +22,7 @@
         <input type="text" name="body">
         <input type="submit" name="submit" value="POST">
     </form>
+    <% include ../common/common-foot.ejs %>
+    <script type="text/javascript" src="/javascripts/thread/thread.js"></script>
   </body>
 </html>
