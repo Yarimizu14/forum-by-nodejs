@@ -4,6 +4,7 @@
  */
 
 var express = require('express')
+  , MemoryStore = require('express').session.MemoryStore
   , routes = require('./routes')
   , user = require('./routes/user')
   , thread = require('./routes/thread')
@@ -20,6 +21,8 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+app.use(express.cookieParser());
+app.use(express.session({ secret: 'keyboard cat', store: new MemoryStore({ reapInterval: 60000 * 10})}));
 app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));

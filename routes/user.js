@@ -15,7 +15,7 @@ exports.login = function(req, res) {
  */
 exports.authorize = function(req, res) {
     var name = req.param('name');
-    var pw = req.param('pw');
+    var pw   = req.param('pw');
 
     //モデルをインスタンス化
     var users   = userModel.createUserDB();
@@ -26,6 +26,9 @@ exports.authorize = function(req, res) {
         success : function(user_info) {
             var data = {};
             data.user = user_info;
+
+            //ユーザー情報を保持
+            req.session.user = user_info;
             res.redirect('/thread/list');
         },
         error : function() {

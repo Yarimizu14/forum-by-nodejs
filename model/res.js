@@ -23,7 +23,7 @@ ResDB.prototype.createRes = function(q_data, callback) {
  * 指定したスレッドの全てのコメントを取得する関数 
  */
 ResDB.prototype.getResByThread = function(q_data, callback) {
-   var q_str = 'select res.body, threads.title from threads, res where threads.thread_id=' + q_data.thread_id + ' AND res.thread_id='  + q_data.thread_id + ';'
+   var q_str = 'select res.body, threads.title, threads.description from threads, res where threads.thread_id=' + q_data.thread_id + ' AND res.thread_id='  + q_data.thread_id + ';'
    console.log(q_str);
     this.query(q_str, void 0, function (err, results, fields) {
         callback(results);

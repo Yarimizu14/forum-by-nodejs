@@ -7,9 +7,11 @@
   <body>
     <% include ../common/common-nav.ejs %>
     <ul>
-    <% for(var i=0, len=results.length; i<len; i++) { %>
-        <li><%= results[i].body %></li>
-    <% } %>
+        <% if(results.length !== 0) { %>
+            <% for(var i=0, len=results.length; i<len; i++) { %>
+                <li><%= results[i].body %></li>
+            <% } %>
+        <% } %>
     </ul>
     <form method="post" action="/thread/thread">
         <input type="hidden" name="thread_id" value="<%= thread_id %>">

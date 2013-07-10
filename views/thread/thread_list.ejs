@@ -8,7 +8,7 @@
     <% include ../common/common-nav.ejs %>
     <ul>
         <% for(var i=0, len=threads.length; i<len; i++) { %>
-            <li><a href=""><%= threads[i].title %></a></li>
+        <li><a href="/thread/thread?thread_id=<%= threads[i].thread_id %>"><%= threads[i].title %></a></li>
         <% } %>
     </ul>
   </body>

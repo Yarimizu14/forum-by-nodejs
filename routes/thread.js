@@ -51,17 +51,14 @@ exports.res = function(req, res) {
     var title     = req.param('title');
     var body      = req.param('body');
 
-    console.log(title);
-    console.log(thread_id);
-    console.log(body);
-
     var ress = resModel.createResDB();
 
     var q_data = {
-        user_id   : 1,
+        user_id   : req.session.user.user_id,
         thread_id : thread_id,
         body      : body,
     };
+    console.log(q_data);
 
     ress.createRes(q_data, function(results) {
         var data = {
