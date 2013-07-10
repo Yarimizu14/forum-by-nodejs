@@ -35,16 +35,18 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 
 //ログイン画面
-app.get('/login', user.login);
+app.get('/login', user.referLoginForm);
 app.post('/login', user.authorize);
 
 //スレッド一覧を表示
-app.get('/thread/list', thread.showList);
+app.get('/thread/list', thread.referThreadList);
+app.get('/thread/create_thread', thread.referThreadForm);
+app.post('/thread/create_thread', thread.createThread);
 
 //各スレッドの表示・投稿
-app.get('/thread/thread', thread.showThread);
+app.get('/thread/thread', thread.referThread);
 app.post('/thread/thread', thread.createRes);
-app.delete('/thread/delete_ajax', thread.deleteRes);
+app.delete('/thread/delete_res_ajax', thread.deleteRes);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

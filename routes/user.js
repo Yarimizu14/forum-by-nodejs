@@ -5,7 +5,7 @@ var userModel   = require('../model/users.js'),
  * ログイン画面を表示する
  * GET /login
  */
-exports.login = function(req, res) {
+exports.referLoginForm = function(req, res) {
     res.render('user/user_login', { title: 'Login Form'});
 }
 
