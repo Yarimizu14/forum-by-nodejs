@@ -1,9 +1,12 @@
-var userModel   = require('../model/users.js'),
-    threadModel = require('../model/thread.js'),
-    resModel    = require('../model/res.js');
+var userModel       = require('../model/users.js'),
+    threadModel     = require('../model/thread.js'),
+    resModel        = require('../model/res.js'),
+    favoriteModel   = require('../model/favorites.js');
 
-var ress = resModel.createResDB();
-var threads = threadModel.createThreadDB();
+var ress        = resModel.createResDB(),
+    threads     = threadModel.createThreadDB(),
+    favorites   = favoriteModel.createFavoriteDB();
+
 
 /*
  * スレッド一覧の表示.
@@ -25,6 +28,7 @@ exports.referThreadList = function(req, res){
  * POST /thread/create_thread
  */
 exports.referThreadForm = function(req, res){
+    console.log(req.session.user);
     res.render('thread/create_thread', {});
 };
 
@@ -57,6 +61,7 @@ exports.referThread = function(req, res) {
     var thread_id = req.param('thread_id');
 
     var q_data = {
+        user_id   : req.session.user.user_id,
         thread_id : thread_id
     };
 
@@ -76,7 +81,8 @@ exports.createRes = function(req, res) {
     var body      = req.param('body');
 
     var q_data = {
-        user_id   : req.session.user.user_id,
+        //user_id   : req.session.user.user_id,
+        user_id   : 3,
         thread_id : thread_id,
         body      : body,
     };
@@ -98,15 +104,74 @@ exports.createRes = function(req, res) {
 exports.deleteRes = function(req, res) {
     console.log("delete res");
     var res_id = req.param('res_id');
+    console.log(res_id);
 
     var q_data = {
         res_id : res_id
     };
 
     ress.deleteRes(q_data, function(results) {
-        res.contentType('json');
-        //res.send({ response: JSON.stringify({resutls : results}) }); 
-        res.send(JSON.stringify({response : results})); 
+        if(Object.keys(results).length) {
+            res.contentType('json');
+            //res.send({ response: JSON.stringify({resutls : results}) }); 
+            res.send(JSON.stringify({response : results})); 
+        } else {
+            res.status('404').send('Error');
+        };
+    });
+};
+
+
+/*
+ * レスにイイネをつける
+ *
+ */
+exports.createFavorite = function(req, res) {
+    var thread_id = req.param('thread_id');
+    var res_id    = req.param('res_id');
+
+    var q_data = {
+        //user_id   : req.session.user.user_id,
+        user_id   : 1,
+        thread_id : thread_id,
+        res_id    : res_id
+    };
+
+    favorites.createFavorite(q_data, function(results) {
+        if(Object.keys(results).length) {
+            res.contentType('json');
+            //res.send({ response: JSON.stringify({resutls : results}) }); 
+            res.send(JSON.stringify({response : results})); 
+        } else {
+            res.status('404').send('Error');
+        };
+    });
+};
+
+/*
+ * レスのイイネを取り消す
+ *
+ */
+exports.deleteFavorite = function(req, res) {
+    console.log("favorite fined");
+    var thread_id = req.param('thread_id');
+    var res_id    = req.param('res_id');
+
+    var q_data = {
+        user_id   : req.session.user.user_id,
+        //user_id   : 1,
+        thread_id : thread_id,
+        res_id    : res_id
+    };
+
+    favorites.deleteFavorite(q_data, function(results) {
+        if(Object.keys(results).length) {
+            res.contentType('json');
+            //res.send({ response: JSON.stringify({resutls : results}) }); 
+            res.send(JSON.stringify({response : results})); 
+        } else {
+            res.status('404').send('Error');
+        };
     });
 };
 

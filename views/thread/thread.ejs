@@ -10,14 +10,17 @@
     <p>投稿数　<%= res.length %></p>
     <p><%= description %></p>
     <ul id="resList">
-        <% if(res.length !== 0) { %>
-            <% for(var i=0, len=res.length; i<len; i++) { %>
-                <li class="resList_each" data-id="<%= res[i].res_id %>"><%= res[i].body %></li>
-            <% } %>
+        <% for(var i=0, len=res.length; i<len; i++) { %>
+            <li class="resList_each" data-id="<%= res[i].res_id %>" data-favorite="<%= res[i].favorite %>">
+                <div><%= res[i].body %></div>
+                <div>作成者:<%= res[i].name %></div>
+                <div class="resList_del">削除</div>
+                <div class="resList_favorite">いいね</div>
+            </li>
         <% } %>
     </ul>
     <form method="post" action="/thread/thread">
-        <input type="hidden" name="thread_id" value="<%= thread_id %>">
+        <input id="thread_id" type="hidden" name="thread_id" value="<%= thread_id %>">
         <input type="hidden" name="title" value="<%= title %>">
         <input type="text" name="body">
         <input type="submit" name="submit" value="POST">

@@ -5,3 +5,9 @@ body {
 a {
   color: #00b7ff;
 }
+#resList .resList_each[data-favorite="true"] {
+  color: #f00;
+}
+#resList .resList_each[data-favorite="false"] {
+  color: #000;
+}

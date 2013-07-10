@@ -48,6 +48,10 @@ app.get('/thread/thread', thread.referThread);
 app.post('/thread/thread', thread.createRes);
 app.delete('/thread/delete_res_ajax', thread.deleteRes);
 
+//いいねの投稿
+app.post('/thread/create_favorite_ajax', thread.createFavorite);
+app.delete('/thread/delete_favorite_ajax', thread.deleteFavorite);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
