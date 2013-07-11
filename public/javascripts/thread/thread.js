@@ -90,6 +90,11 @@ $(function() {
         })
         .done(function(data) {
             console.log(data);
+            var res = data.response[0];
+            var newRes = $('<li class="resList_each res" data-id="' + res.res_id  + '" data-favorite="false" data-self="true"><p class="res_main">' + res.body + '</p><ul class="res_sub clearfix"><li class="res_sub_name">' + res.name + '</li><li class="res_sub_time">' + res['DATE_FORMAT(res.created, "%Y-%m-%d %k:%i:%s")'] + '</li><li class="res_sub_favorite_num">0</li><li class="res_sub_favorite"><img class="img_favorite" src="/images/8_heart_stroke.png"></li><li class="res_sub_del"><img class="img_del" src="/images/7_batsu.png"></li></ul></li>');
+            newRes.hide();
+            $("#resList").append(newRes);
+            newRes.fadeIn("slow");
         })
         .fail(function() {alert("failed");});
 
