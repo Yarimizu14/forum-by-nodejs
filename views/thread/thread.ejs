@@ -7,9 +7,11 @@
   <body>
     <% include ../common/common-nav.ejs %>
     <article>
-        <p><%= title %></p>
-        <p>投稿数　<%= res.length %></p>
-        <p><%= description %></p>
+        <div id="thread">
+            <p class="thread_title"><%= title %></p>
+            <p class="thread_description"><%= description %></p>
+            <p class="thread_res">投稿数　<%= res.length %></p>
+        </div>
         <ul id="resList">
             <% var self = false %>
             <% for(var i=0, len=res.length; i<len; i++) { %>
@@ -22,7 +24,7 @@
                 <li class="resList_each res" data-id="<%= res[i].res_id %>" data-favorite="<%= res[i].favorite %>" data-self="<%= self %>">
                         <p class="res_main"><%= res[i].body %></p>
                         <ul class="res_sub clearfix">
-                            <li class="res_sub_name">作成者:<%= res[i].name %></li>
+                            <li class="res_sub_name"><%= res[i].name %></li>
                             <li class="res_sub_time">○○:○○:○○</li>
                             <li class="res_sub_favorite_num"><%= res[i].favoriteNum %></li>
                             <li class="res_sub_favorite">
