@@ -1,11 +1,8 @@
-ul#resList li.resList_each {
-  width: 100%;
-  border-top: solid 1px #d8d8d8;
-  box-shadow: 0px 2px 0px #fff;
-  -webkit-box-shadow: 0px 2px 0px #fff;
-}
 #thread {
   padding: 15px 0;
+  border-bottom: solid 1px #d8d8d8;
+  box-shadow: 0px 2px 0px #fff;
+  -webkit-box-shadow: 0px 2px 0px #fff;
 }
 #thread > p {
   text-align: center;
@@ -24,6 +21,13 @@ ul#resList li.resList_each {
   font-size: 14px;
   line-height: 28px;
   color: #bbb;
+}
+ul#resList li.resList_each {
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: solid 1px #d8d8d8;
+  box-shadow: 0px 2px 0px #fff;
+  -webkit-box-shadow: 0px 2px 0px #fff;
 }
 .res > * {
   margin: 0 5px;
@@ -60,4 +64,16 @@ ul#resList li.resList_each {
 .res .res_sub .res_sub_del img.img_del {
   vertical-align: middle;
   width: 20px;
+}
+.resForm {
+  width: 95%;
+  margin: 20px auto 10px;
+}
+button.resBtn {
+  display: block;
+  margin: 0 auto 20px;
+  width: 100px;
+  height: 30px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), color-stop(0.01, #f1f1f1), color-stop(0.5, #f1f1f1), color-stop(0.99, #dfdfdf), to(#ccc));
+  -webkit-box-shadow: 1px 1px 2px #e7e7e7;
 }

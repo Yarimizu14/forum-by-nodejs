@@ -6,19 +6,22 @@ var db    = require('./database'),
 function ResDB() {};
 
 ResDB.prototype = db.createClient();
+
 /*
  *  createRes 
  *  新しいレスを追加する関数 
  */
 ResDB.prototype.createRes = function(q_data, callback) {
     var q_str = 'insert into res (user_id, thread_id, body, created) value (' + q_data.user_id + ', ' + q_data.thread_id + ', "' + q_data.body + '", now())';
-    console.log(q_str);
     this.query(q_str, void 0, function (err, results, fields) {
-        console.log(results);
         callback(results);
     });
 }
 
+/*
+ * deleteRes 
+ * 指定したレスを削除する 
+ * */ 
 
 ResDB.prototype.deleteRes = function(q_data, callback) {
     var self = this;
@@ -49,12 +52,13 @@ ResDB.prototype.deleteRes = function(q_data, callback) {
 }
 
 /*
- * getAllRess 
+ * getResByThread
  * 指定したスレッドの全てのコメントを取得する関数 
- * */ 
+ */ 
 ResDB.prototype.getResByThread = function(q_data, callback) {
     var self = this;
     async.parallel({
+        //スレッドの情報を取得
         getThreadInfo : function(cbk) {
             var q_str = 'SELECT threads.title, threads.description FROM threads WHERE threads.thread_id=' + q_data.thread_id + ';'
 
@@ -66,6 +70,7 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
                 };
             });
         },
+        //各レスの内容、レスしたユーザー名を取得
         getResInfo   : function(cbk) {
             var q_str = 'SELECT users.name, users.user_id, res.res_id, res.body FROM res INNER JOIN users ON res.user_id=users.user_id AND res.thread_id=' + q_data.thread_id + ' ORDER BY res.created;';
             self.query(q_str, void 0, function (err, results, fields) {
@@ -76,18 +81,24 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
                 };
             });
         },
+        //自分がイイネしたレスを取得
         getFavoriteInfo  : function(cbk) {
-            var q_str = 'SELECT res_id FROM favorites WHERE user_id=' + q_data.user_id + ' AND thread_id=' + q_data.thread_id + ';';
-            self.query(q_str, void 0, function (err, results, fields) {
-                console.log("favorite res in this thread");
-                console.log(results);
-                if (err) {
-                    throw err;
-                } else {
-                    cbk(null, results);
-                };
-            });
+            if (q_data.user_id) {   //ユーザーがログインしている場合
+                var q_str = 'SELECT res_id FROM favorites WHERE user_id=' + q_data.user_id + ' AND thread_id=' + q_data.thread_id + ';';
+                self.query(q_str, void 0, function (err, results, fields) {
+                    console.log("favorite res in this thread");
+                    console.log(results);
+                    if (err) {
+                        throw err;
+                    } else {
+                        cbk(null, results);
+                    };
+                });
+            } else {   //ユーザーがログインしていない場合
+                cbk(null, []);
+            };
         },
+        //各レスについているイイネの数を取得
         getFavoriteNum  : function(cbk) {
             var q_str = 'SELECT res_id, count(res_id) FROM favorites WHERE thread_id=' + q_data.thread_id + ' GROUP BY res_id;';
             self.query(q_str, void 0, function (err, results, fields) {

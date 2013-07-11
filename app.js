@@ -40,6 +40,7 @@ app.post('/login', user.authorize);
 
 //スレッド一覧を表示
 app.get('/thread/list', thread.referThreadList);
+//新規スレッドの作成
 app.get('/thread/create_thread', thread.referThreadForm);
 app.post('/thread/create_thread', thread.createThread);
 

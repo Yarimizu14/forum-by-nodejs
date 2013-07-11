@@ -3,6 +3,8 @@
 $(function() {
 
     $(".resList_each .res_sub_del").on("click", function(evt) {
+        if (!checkLoginStatus()) return;
+
         var $this  = $(this);
         var holder = $this.closest(".resList_each");
         var self   = holder.attr("data-self");
@@ -26,6 +28,8 @@ $(function() {
     });
 
     $(".resList_each .img_favorite").on("click", function(evt) {
+        if (!checkLoginStatus()) return;
+
         var $this  = $(this);
         var holder = $this.closest(".resList_each");
         var fav    = holder.attr("data-favorite");
@@ -72,6 +76,15 @@ $(function() {
         };
     });
 
+    function checkLoginStatus() {
+        var loginStatus = $("#loginStatus").val();
+        if (loginStatus === "false") {
+            alert("ログインが必要です");
+            return false;
+        } else {
+            return true;
+        };
+    }
 });
 
 })()

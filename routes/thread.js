@@ -25,11 +25,16 @@ exports.referThreadList = function(req, res){
 
 /*
  * 新規スレッドの作成画面を表示.
- * POST /thread/create_thread
+ * GET /thread/create_thread
  */
 exports.referThreadForm = function(req, res){
+    console.log("スレッド作るよ!");
     console.log(req.session.user);
-    res.render('thread/create_thread', {});
+    if (!req.session.user) {
+        res.render('user/user_login', { msg_exist : true, msg : "スレッド作成にはログインが必要です" });
+    } else {
+        res.render('thread/create_thread', {});
+    }
 };
 
 /*
@@ -58,28 +63,30 @@ exports.createThread = function(req, res){
  */
 exports.referThread = function(req, res) {
     var thread_id = req.param('thread_id');
+    var loginStatus = false;
+    var user_id = null;
 
     if (!req.session.user) {
-        console.log("仮のユーザー");
-        req.session.user = {
-            user_id : 0
-        };
+        loginStatus = false;
+    } else {
+        loginStatus = true;
+        user_id = req.session.user.user_id;
     };
 
     var q_data = {
-        user_id   : req.session.user.user_id,
+        user_id   : user_id,
         thread_id : thread_id
     };
 
     ress.getResByThread(q_data, function(results) {
-        console.log(results);
+        results.loginStatus = loginStatus;
         res.render('thread/thread', results);
     });
 };
 
 /*
  * スレッドに対するコメントを投稿
- *
+ * POST /thread/thread
  */
 exports.createRes = function(req, res) {
     var thread_id = req.param('thread_id');
@@ -104,7 +111,7 @@ exports.createRes = function(req, res) {
 
 /*
  * スレッドに対するコメントを削除
- *
+ * DELETE /thread/delete_res_ajax
  */
 exports.deleteRes = function(req, res) {
     console.log("delete res");
@@ -129,6 +136,7 @@ exports.deleteRes = function(req, res) {
 
 /*
  * レスにイイネをつける
+ * POST /thread/create_favorite_ajax
  *
  */
 exports.createFavorite = function(req, res) {
@@ -154,10 +162,9 @@ exports.createFavorite = function(req, res) {
 
 /*
  * レスのイイネを取り消す
- *
+ * DELETE /thread/delete_favorite_ajax
  */
 exports.deleteFavorite = function(req, res) {
-    console.log("favorite fined");
     var thread_id = req.param('thread_id');
     var res_id    = req.param('res_id');
 

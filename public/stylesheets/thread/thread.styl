@@ -1,15 +1,15 @@
 my_black = #333
 my_gray  = #BBB
 
-ul#resList
-    li.resList_each
-        width 100%
-        border-top solid 1px #d8d8d8
-        box-shadow 0px 2px 0px #FFF
-        -webkit-box-shadow 0px 2px 0px #FFF
+section-line() 
+    border-bottom solid 1px #d8d8d8
+    box-shadow 0px 2px 0px #FFF
+    -webkit-box-shadow 0px 2px 0px #FFF
+
 
 #thread
     padding 15px 0
+    section-line()
 
     > p
         text-align center
@@ -28,6 +28,12 @@ ul#resList
         font-size 14px
         line-height 28px
         color my_gray
+
+ul#resList
+    li.resList_each
+        width 100%
+        padding-bottom 10px
+        section-line()
 
 sub-height = 30px
 .res
@@ -69,4 +75,27 @@ sub-height = 30px
             img.img_del
                 vertical-align middle
                 width sub-height - 10px
+
+.resForm
+    width 95%
+    margin 20px auto 10px
+
+button-size(w, h)
+    width w
+    height h
+
+button-gradient()
+    background -webkit-gradient(linear, left top, left bottom, from(#FFF),
+    color-stop(0.01, #F1F1F1), color-stop(0.5, #F1F1F1), color-stop(0.99, #DFDFDF), to(#CCC))
+
+button-shadow()
+    -webkit-box-shadow: 1px 1px 2px #E7E7E7
+
+button.resBtn
+    display block
+    margin 0 auto 20px
+    button-size(100px, 30px)
+    button-gradient()
+    button-shadow()
+
 

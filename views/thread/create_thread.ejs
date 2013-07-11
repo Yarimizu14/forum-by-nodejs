@@ -2,17 +2,18 @@
 <html>
   <head>
     <% include ../common/common-head.ejs %>
-    <link rel='stylesheet' href='/stylesheets/create_thread.css' />
+    <link rel='stylesheet' href='/stylesheets/thread/create_thread.css' />
   </head>
   <body>
     <% include ../common/common-nav.ejs %>
     <article>
-        <p>スレッドのタイトルを入力してください<p>
         <form method="post" action="/thread/create_Thread">
             <input type="hidden" name="category_id" value="5">
-            <input type="text" name="title">
-            <textarea name="description" cols=40 rows=4></textarea>
-            <input type="submit" name="submit" value="POST">
+            <p class="msg">スレッドのタイトルを入力してください<p>
+            <input class="titleForm" type="text" name="title">
+            <p class="msg">スレッドの説明を入力してください<p>
+            <textarea class="descriptionForm" placeholder="Type description of this thread" name="description" cols="40" rows="5"></textarea><br>
+            <button class="createBtn" type="submit" name="submit" value="POST">作成</button>
         </form>
     </article>
     <% include ../common/common-foot.ejs %>
