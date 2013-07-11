@@ -79,8 +79,11 @@ exports.referThread = function(req, res) {
     };
 
     ress.getResByThread(q_data, function(results) {
-        results.loginStatus = loginStatus;
-        res.render('thread/thread', results);
+        if(Object.keys(results).length) {
+            results.loginStatus = loginStatus;
+            res.render('thread/thread', results);
+        } else {
+        }
     });
 };
 
@@ -110,6 +113,7 @@ exports.createRes = function(req, res) {
 };
 
 /*
+ * deleteRes
  * スレッドに対するコメントを削除
  * DELETE /thread/delete_res_ajax
  */
@@ -125,7 +129,6 @@ exports.deleteRes = function(req, res) {
     ress.deleteRes(q_data, function(results) {
         if(Object.keys(results).length) {
             res.contentType('json');
-            //res.send({ response: JSON.stringify({resutls : results}) }); 
             res.send(JSON.stringify({response : results})); 
         } else {
             res.status('404').send('Error');
@@ -135,6 +138,7 @@ exports.deleteRes = function(req, res) {
 
 
 /*
+ * createFavorite
  * レスにイイネをつける
  * POST /thread/create_favorite_ajax
  *
@@ -152,7 +156,6 @@ exports.createFavorite = function(req, res) {
     favorites.createFavorite(q_data, function(results) {
         if(Object.keys(results).length) {
             res.contentType('json');
-            //res.send({ response: JSON.stringify({resutls : results}) }); 
             res.send(JSON.stringify({response : results})); 
         } else {
             res.status('404').send('Error');
@@ -161,6 +164,7 @@ exports.createFavorite = function(req, res) {
 };
 
 /*
+ * deleteFavorite
  * レスのイイネを取り消す
  * DELETE /thread/delete_favorite_ajax
  */
@@ -177,7 +181,6 @@ exports.deleteFavorite = function(req, res) {
     favorites.deleteFavorite(q_data, function(results) {
         if(Object.keys(results).length) {
             res.contentType('json');
-            //res.send({ response: JSON.stringify({resutls : results}) }); 
             res.send(JSON.stringify({response : results})); 
         } else {
             res.status('404').send('Error');

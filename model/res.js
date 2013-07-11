@@ -12,17 +12,54 @@ ResDB.prototype = db.createClient();
  *  新しいレスを追加する関数 
  */
 ResDB.prototype.createRes = function(q_data, callback) {
-    var q_str = 'insert into res (user_id, thread_id, body, created) value (' + q_data.user_id + ', ' + q_data.thread_id + ', "' + q_data.body + '", now())';
+    var q_str = 'INSERT INTO res (user_id, thread_id, body, created) VALUES (' + q_data.user_id + ', ' + q_data.thread_id + ', "' + q_data.body + '", now())';
     this.query(q_str, void 0, function (err, results, fields) {
-        callback(results);
+        if (err) {
+            throw err;
+            res.redirect("/error");
+        } else {
+            callback(results);
+        }
     });
 }
+
+/*
+ * createResForAjax 
+ * 指定したレスを削除する 
+ * */ 
+ResDB.prototype.createResForAjax = function(q_data, callback) {
+    var self = this;
+    async.waterfall([
+        function(cbk) {
+            var q_str = 'INSERT INTO res (user_id, thread_id, body, created) VALUES (' + q_data.user_id + ', ' + q_data.thread_id + ', "' + q_data.body + '", now())';
+            this.query(q_str, void 0, function (err, results, fields) {
+                if (err) {
+                    throw err;
+                    res.redirect("/error");
+                } else {
+                    cbk(results);
+                }
+            });
+        },
+        function(results, cbk) {
+            console.log(results);
+        }
+    ], function(err, results) {
+        if (err) {
+            throw err;
+            res.redirect("/error");
+        } else {
+            callback(results);
+        }
+    });
+}
+
+
 
 /*
  * deleteRes 
  * 指定したレスを削除する 
  * */ 
-
 ResDB.prototype.deleteRes = function(q_data, callback) {
     var self = this;
     async.parallel({
@@ -31,6 +68,7 @@ ResDB.prototype.deleteRes = function(q_data, callback) {
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
+                    res.redirect("/error");
                 } else {
                     cbk(null, results);
                 };
@@ -41,13 +79,19 @@ ResDB.prototype.deleteRes = function(q_data, callback) {
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
+                    res.redirect("/error");
                 } else {
                     cbk(null, results);
                 };
             });
          }
     }, function(err, results) {
-        callback(results);
+        if (err) {
+            throw err;
+            res.redirect("/error");
+        } else {
+            callback(results);
+        }
     });
 }
 
@@ -65,6 +109,7 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
+                    res.redirect("/error");
                 } else {
                     cbk(null, results);
                 };
@@ -76,6 +121,7 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
+                    res.redirect("/error");
                 } else {
                     console.log(results);
                     cbk(null, results);
@@ -91,6 +137,7 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
                     console.log(results);
                     if (err) {
                         throw err;
+                        res.redirect("/error");
                     } else {
                         cbk(null, results);
                     };
@@ -107,6 +154,7 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
                 console.log(results);
                 if (err) {
                     throw err;
+                    res.redirect("/error");
                 } else {
                     cbk(null, results);
                 };
@@ -117,30 +165,35 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
         /*
          * ここでエラー処理をする
          */
-       var resList      = results.getResInfo,
-           favoriteList = results.getFavoriteInfo;
-           favoriteNum  = results.getFavoriteNum;
-        for(var i=0, len_i=resList.length; i<len_i; i++) {
-            resList[i].favorite = false;
-            for(var j=0, len_j=favoriteList.length; j<len_j; j++) {
-                if(favoriteList[j].res_id === resList[i].res_id) {
-                    resList[i].favorite = true;
+        if (err) {
+            throw error;
+            res.redirect("/error");
+        } else {
+           var resList      = results.getResInfo,
+               favoriteList = results.getFavoriteInfo;
+               favoriteNum  = results.getFavoriteNum;
+            for(var i=0, len_i=resList.length; i<len_i; i++) {
+                resList[i].favorite = false;
+                for(var j=0, len_j=favoriteList.length; j<len_j; j++) {
+                    if(favoriteList[j].res_id === resList[i].res_id) {
+                        resList[i].favorite = true;
+                    };
                 };
+                resList[i].favoriteNum = 0;
+                for(var k=0, len_k=favoriteNum.length; k<len_k; k++) {
+                    if(favoriteNum[k].res_id === resList[i].res_id) {
+                        resList[i].favoriteNum = favoriteNum[k]["count(res_id)"];
+                    };
+                }
             };
-            resList[i].favoriteNum = 0;
-            for(var k=0, len_k=favoriteNum.length; k<len_k; k++) {
-                if(favoriteNum[k].res_id === resList[i].res_id) {
-                    resList[i].favoriteNum = favoriteNum[k]["count(res_id)"];
-                };
-            }
-        };
-        callback({
-            user_id    : q_data.user_id,
-            thread_id  : q_data.thread_id,
-            title      : results.getThreadInfo[0].title,
-            description: results.getThreadInfo[0].description,
-            res        : resList
-        });
+            callback({
+                user_id    : q_data.user_id,
+                thread_id  : q_data.thread_id,
+                title      : results.getThreadInfo[0].title,
+                description: results.getThreadInfo[0].description,
+                res        : resList
+            });
+        }
     });
 };
 

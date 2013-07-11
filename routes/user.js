@@ -62,10 +62,10 @@ exports.authorize = function(req, res) {
  * GET /mypage
  */
 exports.referMypage = function(req, res) {
-    if (!req.session.user) {
+    if (!req.session.user) {   //ログインしていない場合
         loginStatus = false;
         res.render('user/user_login', { msg_exist : false, msg : "" });
-    } else {
+    } else {     //ログインしている場合
         loginStatus = true;
         user_id = req.session.user.user_id;
         res.render('user/mypage', { });

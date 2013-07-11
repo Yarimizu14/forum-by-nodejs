@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./common/common-head.ejs %>
+    <link rel='stylesheet' href='/stylesheets/error.css' />
+  </head>
+  <body>
+    <% include ./common/common-nav.ejs %>
+    <article>
+        <p class="msg">エラーが発生しました</p>
+        <form method="get" action="/thread/list">
+            <button class="moveBtn" type="submit" name="submit" value="GET">スレッド一覧へ</button>
+        </form>
+    </artilce>
+    <% include ./common/common-foot.ejs %>
+  </body>
+</html>

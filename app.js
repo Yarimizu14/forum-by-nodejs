@@ -8,6 +8,7 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , thread = require('./routes/thread')
+  , error = require('./routes/error')
   , http = require('http')
   , path = require('path');
 
@@ -57,6 +58,9 @@ app.delete('/thread/delete_res_ajax', thread.deleteRes);
 //いいねの投稿
 app.post('/thread/create_favorite_ajax', thread.createFavorite);
 app.delete('/thread/delete_favorite_ajax', thread.deleteFavorite);
+
+//エラー画面の表示
+app.get('/error', error.error);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
