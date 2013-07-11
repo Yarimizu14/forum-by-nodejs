@@ -51,6 +51,9 @@ ul#resList li.resList_each {
   float: left;
   margin-right: 15px;
 }
+.res .res_sub .res_sub_time {
+  font-size: 12px;
+}
 .res .res_sub .res_sub_favorite_num,
 .res .res_sub .res_sub_favorite,
 .res .res_sub .res_sub_del {

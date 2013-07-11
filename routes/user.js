@@ -1,12 +1,11 @@
 var userModel   = require('../model/users.js'),
     threadModel = require('../model/thread.js');
 
-
-//モデルをインスタンス化
 var users   = userModel.createUserDB();
 var threads = threadModel.createThreadDB();
 
 /*
+ * referLoginForm
  * ログイン画面を表示する
  * GET /login
  */
@@ -15,6 +14,7 @@ exports.referLoginForm = function(req, res) {
 }
 
 /*
+ * autorize
  * ユーザー名、パスワードの確認 
  * POST /login
  */
@@ -23,12 +23,12 @@ exports.authorize = function(req, res) {
     var name = req.param('name');
     var pw   = req.param('pw');
 
+    //ログイン・新規ユーザー作成失敗時のコールバック
     var error_callback =  function() {
         res.render('user/user_login', { msg_exist : true, msg : "Failed, try again" });
     };
 
-
-    //ログイン成功・失敗時のコールバック
+    //ログイン時のコールバック
     var auth_callback = {
         success : function(user_info) {
             //ユーザー情報を保持
@@ -38,6 +38,7 @@ exports.authorize = function(req, res) {
         error : error_callback
     };
 
+    // 新規ユーザー作成時のコールバック
     var create_callback = {
         success : function(results) {
             users.authorizeUser(name, pw, auth_callback);
@@ -54,3 +55,29 @@ exports.authorize = function(req, res) {
     }
 
 };
+
+/*
+ * referMypage
+ * マイページの表示
+ * GET /mypage
+ */
+exports.referMypage = function(req, res) {
+    if (!req.session.user) {
+        loginStatus = false;
+        res.render('user/user_login', { msg_exist : false, msg : "" });
+    } else {
+        loginStatus = true;
+        user_id = req.session.user.user_id;
+        res.render('user/mypage', { });
+    };
+}
+
+/*
+ * logout
+ * ユーザーのログアウト
+ * POST /logout
+ */
+exports.logout = function(req, res) {
+    req.session.user = void 0;
+    res.redirect('/thread/list');
+}

@@ -25,7 +25,7 @@
                         <p class="res_main"><%= res[i].body %></p>
                         <ul class="res_sub clearfix">
                             <li class="res_sub_name"><%= res[i].name %></li>
-                            <li class="res_sub_time">○○:○○:○○</li>
+                            <li class="res_sub_time"><%= res[i]['DATE_FORMAT(res.created, "%Y-%m-%d %k:%i:%s")'] %></li>
                             <li class="res_sub_favorite_num"><%= res[i].favoriteNum %></li>
                             <li class="res_sub_favorite">
                                 <% if (res[i].favorite) { %>

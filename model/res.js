@@ -72,11 +72,12 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
         },
         //各レスの内容、レスしたユーザー名を取得
         getResInfo   : function(cbk) {
-            var q_str = 'SELECT users.name, users.user_id, res.res_id, res.body FROM res INNER JOIN users ON res.user_id=users.user_id AND res.thread_id=' + q_data.thread_id + ' ORDER BY res.created;';
+            var q_str = 'SELECT users.name, users.user_id, res.res_id, res.body, DATE_FORMAT(res.created, "%Y-%m-%d %k:%i:%s") FROM res INNER JOIN users ON res.user_id=users.user_id AND res.thread_id=' + q_data.thread_id + ' ORDER BY res.created;';
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
                 } else {
+                    console.log(results);
                     cbk(null, results);
                 };
             });

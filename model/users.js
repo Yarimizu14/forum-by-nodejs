@@ -17,7 +17,7 @@ UserDB.prototype.createUser = function(name, pw, callback) {
             callback.error();
         } else {
             console.log(results);
-            callback(results);
+            callback.success(results);
         };
     });
 }

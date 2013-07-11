@@ -37,9 +37,14 @@ app.get('/', routes.index);
 //ログイン画面
 app.get('/login', user.referLoginForm);
 app.post('/login', user.authorize);
+app.post('/logout', user.logout);
+
+//マイページ画面
+app.get('/mypage', user.referMypage);
 
 //スレッド一覧を表示
 app.get('/thread/list', thread.referThreadList);
+
 //新規スレッドの作成
 app.get('/thread/create_thread', thread.referThreadForm);
 app.post('/thread/create_thread', thread.createThread);
