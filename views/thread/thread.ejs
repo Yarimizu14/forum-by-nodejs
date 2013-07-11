@@ -10,12 +10,22 @@
     <p>投稿数　<%= res.length %></p>
     <p><%= description %></p>
     <ul id="resList">
+        <% var self = false %>
         <% for(var i=0, len=res.length; i<len; i++) { %>
-            <li class="resList_each" data-id="<%= res[i].res_id %>" data-favorite="<%= res[i].favorite %>">
+
+            <% if(user_id == res[i].user_id) { %>
+                <% self = true %>
+            <% } else { %>
+                <% self = false %>
+            <% }  %>
+            <li class="resList_each" data-id="<%= res[i].res_id %>" data-favorite="<%= res[i].favorite %>" data-self="<%= self %>">
                 <div><%= res[i].body %></div>
-                <div>作成者:<%= res[i].name %></div>
-                <div class="resList_del">削除</div>
+                <div class="resList_name">作成者:<%= res[i].name %></div>
+                <% if (self) { %>
+                    <div class="resList_del">削除</div>
+                <% } %>
                 <div class="resList_favorite">いいね</div>
+                <div class="resList_favoriteNum"><%= res[i].favoriteNum %></div>
             </li>
         <% } %>
     </ul>

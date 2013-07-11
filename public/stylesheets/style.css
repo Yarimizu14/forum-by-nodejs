@@ -11,3 +11,6 @@ a {
 #resList .resList_each[data-favorite="false"] {
   color: #000;
 }
+#resList .resList_each[data-self="true"] .resList_name {
+  color: #008000;
+}

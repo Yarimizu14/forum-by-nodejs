@@ -42,8 +42,7 @@ exports.createThread = function(req, res){
     var description = req.param("description");
 
     var q_data = {
-        //user_id   : req.session.user.user_id,
-        user_id   : 1,
+        user_id   : req.session.user.user_id,
         category_id : category_id,
         title   : title,
         description : description,
@@ -59,6 +58,13 @@ exports.createThread = function(req, res){
  */
 exports.referThread = function(req, res) {
     var thread_id = req.param('thread_id');
+
+    if (!req.session.user) {
+        console.log("仮のユーザー");
+        req.session.user = {
+            user_id : 0
+        };
+    };
 
     var q_data = {
         user_id   : req.session.user.user_id,
@@ -81,8 +87,7 @@ exports.createRes = function(req, res) {
     var body      = req.param('body');
 
     var q_data = {
-        //user_id   : req.session.user.user_id,
-        user_id   : 3,
+        user_id   : req.session.user.user_id,
         thread_id : thread_id,
         body      : body,
     };
@@ -131,8 +136,7 @@ exports.createFavorite = function(req, res) {
     var res_id    = req.param('res_id');
 
     var q_data = {
-        //user_id   : req.session.user.user_id,
-        user_id   : 1,
+        user_id   : req.session.user.user_id,
         thread_id : thread_id,
         res_id    : res_id
     };
@@ -159,7 +163,6 @@ exports.deleteFavorite = function(req, res) {
 
     var q_data = {
         user_id   : req.session.user.user_id,
-        //user_id   : 1,
         thread_id : thread_id,
         res_id    : res_id
     };
