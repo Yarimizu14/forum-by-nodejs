@@ -2,39 +2,50 @@
 <html>
   <head>
     <% include ../common/common-head.ejs %>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/thread/thread.css' />
   </head>
   <body>
     <% include ../common/common-nav.ejs %>
-    <p><%= title %></p>
-    <p>投稿数　<%= res.length %></p>
-    <p><%= description %></p>
-    <ul id="resList">
-        <% var self = false %>
-        <% for(var i=0, len=res.length; i<len; i++) { %>
+    <article>
+        <p><%= title %></p>
+        <p>投稿数　<%= res.length %></p>
+        <p><%= description %></p>
+        <ul id="resList">
+            <% var self = false %>
+            <% for(var i=0, len=res.length; i<len; i++) { %>
 
-            <% if(user_id == res[i].user_id) { %>
-                <% self = true %>
-            <% } else { %>
-                <% self = false %>
-            <% }  %>
-            <li class="resList_each" data-id="<%= res[i].res_id %>" data-favorite="<%= res[i].favorite %>" data-self="<%= self %>">
-                <div><%= res[i].body %></div>
-                <div class="resList_name">作成者:<%= res[i].name %></div>
-                <% if (self) { %>
-                    <div class="resList_del">削除</div>
-                <% } %>
-                <div class="resList_favorite">いいね</div>
-                <div class="resList_favoriteNum"><%= res[i].favoriteNum %></div>
-            </li>
-        <% } %>
-    </ul>
-    <form method="post" action="/thread/thread">
-        <input id="thread_id" type="hidden" name="thread_id" value="<%= thread_id %>">
-        <input type="hidden" name="title" value="<%= title %>">
-        <input type="text" name="body">
-        <input type="submit" name="submit" value="POST">
-    </form>
+                <% if(user_id == res[i].user_id) { %>
+                    <% self = true %>
+                <% } else { %>
+                    <% self = false %>
+                <% }  %>
+                <li class="resList_each res" data-id="<%= res[i].res_id %>" data-favorite="<%= res[i].favorite %>" data-self="<%= self %>">
+                        <p class="res_main"><%= res[i].body %></p>
+                        <ul class="res_sub clearfix">
+                            <li class="res_sub_name">作成者:<%= res[i].name %></li>
+                            <li class="res_sub_time">○○:○○:○○</li>
+                            <li class="res_sub_favorite_num"><%= res[i].favoriteNum %></li>
+                            <li class="res_sub_favorite">
+                                <% if (res[i].favorite) { %>
+                                    <img class="img_favorite" src="/images/9_heart_fill.png">
+                                <%  } else {  %>
+                                    <img class="img_favorite" src="/images/8_heart_stroke.png">
+                                <%  } %>
+                            </li>
+                            <% if (self) { %>
+                                <li class="res_sub_del"><img class="img_del" src="/images/7_batsu.png"></li>
+                            <% } %>
+                        </ul>
+                </li>
+            <% } %>
+        </ul>
+        <form method="post" action="/thread/thread">
+            <input id="thread_id" type="hidden" name="thread_id" value="<%= thread_id %>">
+            <input type="hidden" name="title" value="<%= title %>">
+            <input type="text" name="body">
+            <input type="submit" name="submit" value="POST">
+        </form>
+    </article>
     <% include ../common/common-foot.ejs %>
     <script type="text/javascript" src="/javascripts/thread/thread.js"></script>
   </body>

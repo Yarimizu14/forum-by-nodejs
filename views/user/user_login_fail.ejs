@@ -2,17 +2,19 @@
 <html>
   <head>
     <% include ../common/common-head.ejs %>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/user_login_fail.css' />
   </head>
   <body>
     <% include ../common/common-nav.ejs %>
-    <p>Login Failed, try again</p>
-    <form method="POST" action="/login">
-        <div>名前:
-            <input type="text" name="name">
-            <input type="text" name="pw">
-            <input type="submit" name="submit" value="POST">
-        </div>
-    </form>
+    <article>
+        <p>Login Failed, try again</p>
+        <form method="POST" action="/login">
+            <div>名前:
+                <input type="text" name="name">
+                <input type="text" name="pw">
+                <input type="submit" name="submit" value="POST">
+            </div>
+        </form>
+    </article>
  </body>
 </html>
