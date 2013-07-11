@@ -1,8 +1,6 @@
-var userModel   = require('../model/users.js'),
-    threadModel = require('../model/thread.js');
+var userModel   = require('../model/users.js');
 
 var users   = userModel.createUserDB();
-var threads = threadModel.createThreadDB();
 
 /*
  * referLoginForm
@@ -19,9 +17,9 @@ exports.referLoginForm = function(req, res) {
  * POST /login
  */
 exports.authorize = function(req, res) {
-    var type = req.param('submit');
-    var name = req.param('name');
-    var pw   = req.param('pw');
+    var type = req.param('submit'),
+        name = req.param('name'),
+        pw   = req.param('pw');
 
     //ログイン・新規ユーザー作成失敗時のコールバック
     var error_callback =  function() {
@@ -53,7 +51,6 @@ exports.authorize = function(req, res) {
         //認証処理
         users.authorizeUser(name, pw, auth_callback);
     }
-
 };
 
 /*
@@ -62,6 +59,9 @@ exports.authorize = function(req, res) {
  * GET /mypage
  */
 exports.referMypage = function(req, res) {
+    var loginStatus,
+        user_id;
+
     if (!req.session.user) {   //ログインしていない場合
         loginStatus = false;
         res.render('user/user_login', { msg_exist : false, msg : "" });

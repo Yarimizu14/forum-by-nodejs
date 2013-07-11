@@ -66,7 +66,6 @@ ResDB.prototype.createResForAjax = function(q_data, callback) {
 }
 
 
-
 /*
  * deleteRes 
  * 指定したレスを削除する 

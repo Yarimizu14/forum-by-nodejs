@@ -32,11 +32,9 @@ UserDB.prototype.authorizeUser = function(name, pw, callback) {
             throw err
             callback.error();
         } else {
-            if(results[0] !==  void 0 && results[0].pw === pw) {
-                console.log("login successful!!");
+            if(results[0] !==  void 0 && results[0].pw === pw) {    //ログイン成功時 
                 callback.success(results[0]);
-            } else {
-                console.log("login denied!!");
+            } else {                                                 //ログイン失敗時
                 callback.error();
             };
         }
