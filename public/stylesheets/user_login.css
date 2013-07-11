@@ -1,0 +1,23 @@
+.msg {
+  padding-top: 15px;
+  text-align: center;
+  color: #f00;
+}
+.formWrapper {
+  padding: 15px;
+}
+.formWrapper input {
+  width: 200px;
+}
+.formWrapper .nameForm {
+  margin-bottom: 10px;
+}
+.formWrapper .nameForm > span {
+  margin-right: 11px;
+}
+.formWrapper .passForm {
+  margin-bottom: 10px;
+}
+.formWrapper .passForm > span {
+  margin-right: 20px;
+}

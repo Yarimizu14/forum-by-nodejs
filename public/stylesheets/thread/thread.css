@@ -1,0 +1,63 @@
+ul#resList li.resList_each {
+  width: 100%;
+  border-top: solid 1px #d8d8d8;
+  box-shadow: 0px 2px 0px #fff;
+  -webkit-box-shadow: 0px 2px 0px #fff;
+}
+#thread {
+  padding: 15px 0;
+}
+#thread > p {
+  text-align: center;
+}
+#thread .thread_title {
+  font-size: 25px;
+  line-height: 38px;
+  color: #333;
+}
+#thread .thread_description {
+  font-size: 15px;
+  line-height: 25px;
+  color: #333;
+}
+#thread .thread_res {
+  font-size: 14px;
+  line-height: 28px;
+  color: #bbb;
+}
+.res > * {
+  margin: 0 5px;
+}
+.res .res_main {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #333;
+}
+.res .res_sub {
+  margin-top: 5px;
+  font-size: 15px;
+  line-height: 30px;
+  color: #bbb;
+}
+.res .res_sub > li {
+  height: 30px;
+}
+.res .res_sub .res_sub_name,
+.res .res_sub .res_sub_time {
+  float: left;
+  margin-right: 15px;
+}
+.res .res_sub .res_sub_favorite_num,
+.res .res_sub .res_sub_favorite,
+.res .res_sub .res_sub_del {
+  float: right;
+  margin-right: 10px;
+}
+.res .res_sub .res_sub_favorite img.img_favorite {
+  vertical-align: middle;
+  width: 22px;
+}
+.res .res_sub .res_sub_del img.img_del {
+  vertical-align: middle;
+  width: 20px;
+}

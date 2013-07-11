@@ -1,0 +1,57 @@
+li {
+  list-style: none;
+}
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+body {
+  width: 320px;
+/*height body-height*/
+  margin: 0 auto;
+  padding: 0;
+/*border solid 1px black*/
+  background-image: url("/images/ptn.png");
+  background-repeat: repeat;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+/*** ナビゲーション ***/
+nav {
+  position: fixed;
+  top: 0;
+  -webkit-transform: translateZ(0);
+/* GPUレイヤーに変換 */
+  height: 50px;
+  width: 316px;
+  padding: 0 2px;
+  border-radius: 8 8 0px 0px;
+  -webkit-border-radius: 8 8 0px 0px;
+  border: 1px solide #09c;
+  border-bottom: 3px solide #09c;
+  background: -webkit-gradient(linear, left top, left bottom, from(#b1d2e0), color-stop(0.03, #b1d2e0), color-stop(0.03, #09c), to(#069));
+  color: #fff;
+}
+nav li:nth-of-type(1) {
+  margin-top: 3px;
+  float: left;
+}
+nav li:nth-of-type(2) {
+  float: left;
+  line-height: 50px;
+  text-align: center;
+  width: 235px;
+/*width 240px*/
+}
+nav li:nth-of-type(3) {
+  margin-top: 3px;
+  float: right;
+}
+/* メインコンテンツ */
+article {
+  margin-top: 50px;
+  width: 316px;
+  padding: 0 2px;
+}

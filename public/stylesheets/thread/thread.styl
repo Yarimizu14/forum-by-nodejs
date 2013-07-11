@@ -1,0 +1,72 @@
+my_black = #333
+my_gray  = #BBB
+
+ul#resList
+    li.resList_each
+        width 100%
+        border-top solid 1px #d8d8d8
+        box-shadow 0px 2px 0px #FFF
+        -webkit-box-shadow 0px 2px 0px #FFF
+
+#thread
+    padding 15px 0
+
+    > p
+        text-align center
+
+    .thread_title
+        font-size 25px
+        line-height 38px
+        color my_black
+
+    .thread_description
+        font-size 15px
+        line-height 25px
+        color my_black
+
+    .thread_res
+        font-size 14px
+        line-height 28px
+        color my_gray
+
+sub-height = 30px
+.res
+
+    > * 
+        margin 0 5px
+
+    .res_main
+        margin-top 10px
+        font-size 18px
+        color my_black
+
+    .res_sub
+        margin-top 5px
+        font-size 15px
+        line-height sub-height
+        color my_gray
+
+        > li
+            height sub-height
+
+        .res_sub_name
+        .res_sub_time
+            float left
+            margin-right 15px
+
+        .res_sub_favorite_num
+        .res_sub_favorite
+        .res_sub_del
+            float right
+            margin-right 10px
+
+        .res_sub_favorite
+            img.img_favorite
+                vertical-align middle
+                width sub-height - 8px
+
+        .res_sub_del
+            img.img_del
+                vertical-align middle
+                width sub-height - 10px
+
