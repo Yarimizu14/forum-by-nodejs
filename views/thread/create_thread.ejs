@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../common/common-head.ejs %>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <% include ../common/common-nav.ejs %>
+    <p>スレッドのタイトルを入力してください<p>
+    <form method="post" action="/thread/create_Thread">
+        <input type="hidden" name="category_id" value="5">
+        <input type="text" name="title">
+        <textarea name="description" cols=40 rows=4></textarea>
+        <input type="submit" name="submit" value="POST">
+    </form>
+    <% include ../common/common-foot.ejs %>
+  </body>
+</html>
