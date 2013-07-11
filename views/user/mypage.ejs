@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../common/common-head.ejs %>
+    <link rel='stylesheet' href='/stylesheets/user/mypage.css' />
+  </head>
+  <body>
+    <% include ../common/common-nav.ejs %>
+    <article>
+        <form method="post" action="/logout">
+            <button class="logoutBtn" type="submit" name="submit" value="POST">ログアウト</button>
+        </form>
+
+    </artilce>
+    <% include ../common/common-foot.ejs %>
+  </body>
+</html>
