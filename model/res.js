@@ -32,17 +32,28 @@ ResDB.prototype.createResForAjax = function(q_data, callback) {
     async.waterfall([
         function(cbk) {
             var q_str = 'INSERT INTO res (user_id, thread_id, body, created) VALUES (' + q_data.user_id + ', ' + q_data.thread_id + ', "' + q_data.body + '", now())';
-            this.query(q_str, void 0, function (err, results, fields) {
+            self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
                     res.redirect("/error");
                 } else {
-                    cbk(results);
+                    cbk(null, results);
                 }
             });
         },
         function(results, cbk) {
             console.log(results);
+            var q_str = 'SELECT users.name, users.user_id, res.res_id, res.body, DATE_FORMAT(res.created, "%Y-%m-%d %k:%i:%s") FROM res INNER JOIN users ON res.user_id=users.user_id AND res.thread_id=' + q_data.thread_id + ' AND users.user_id=' + q_data.user_id + ' ORDER BY res.created DESC;';
+            self.query(q_str, void 0, function (err, results, fields) {
+                if (err) {
+                    throw err;
+                    res.redirect("/error");
+                } else {
+                    console.log(results);
+                    cbk(null, results);
+                };
+            });
+
         }
     ], function(err, results) {
         if (err) {

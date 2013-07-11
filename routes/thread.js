@@ -99,7 +99,7 @@ exports.createRes = function(req, res) {
     var q_data = {
         user_id   : req.session.user.user_id,
         thread_id : thread_id,
-        body      : body,
+        body      : body
     };
 
     ress.createRes(q_data, function(results) {
@@ -111,6 +111,32 @@ exports.createRes = function(req, res) {
        res.redirect('thread/thread?thread_id=' + thread_id);
     });
 };
+
+/*
+ * スレッドに対するコメントを投稿(AJAX)
+ * POST /thread/create_res_ajax
+ */
+exports.createResForAjax = function(req, res) {
+    var thread_id = req.param('thread_id');
+    var body      = req.param('body');
+
+    var q_data = {
+        user_id   : req.session.user.user_id,
+        thread_id : thread_id,
+        body      : body
+    };
+
+    ress.createResForAjax(q_data, function(results) {
+        if(Object.keys(results).length) {
+            res.contentType('json');
+            res.send(JSON.stringify({response : results})); 
+        } else {
+            res.status('404').send('Error');
+        };
+    });
+};
+
+
 
 /*
  * deleteRes

@@ -76,6 +76,26 @@ $(function() {
         };
     });
 
+    $("#createRes").on("click", function(evt) {
+        evt.preventDefault();
+        if (!checkLoginStatus()) return;
+
+        $.ajax({
+            type : 'POST',
+            url  : '/thread/create_res_ajax',
+            data : {
+                thread_id : $("#thread_id").val(),
+                body : $("#resContent").val()
+            }
+        })
+        .done(function(data) {
+            console.log(data);
+        })
+        .fail(function() {alert("failed");});
+
+
+    });
+
     function checkLoginStatus() {
         var loginStatus = $("#loginStatus").val();
         if (loginStatus === "false") {

@@ -52,8 +52,11 @@ app.post('/thread/create_thread', thread.createThread);
 
 //各スレッドの表示・投稿
 app.get('/thread/thread', thread.referThread);
+
+//レスの作成・削除
 app.post('/thread/thread', thread.createRes);
 app.delete('/thread/delete_res_ajax', thread.deleteRes);
+app.post('/thread/create_res_ajax', thread.createResForAjax);
 
 //いいねの投稿
 app.post('/thread/create_favorite_ajax', thread.createFavorite);

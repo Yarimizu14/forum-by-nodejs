@@ -46,8 +46,8 @@
             <form method="post" action="/thread/thread">
                 <input id="thread_id" type="hidden" name="thread_id" value="<%= thread_id %>">
                 <input type="hidden" name="title" value="<%= title %>">
-                <textarea class="resForm" placeholder="Type your comments" name="body" cols="40" rows="5"></textarea><br>
-                <button class="resBtn" type="submit" name="submit" value="POST">投稿</button>
+                <textarea id="resContent" class="resForm" placeholder="Type your comments" name="body" cols="40" rows="5"></textarea><br>
+                <button id="createRes" class="resBtn" type="submit" name="submit" value="POST">投稿</button>
             </form>
         <% } %>
     </article>
