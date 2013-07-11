@@ -7,11 +7,22 @@
   <body>
     <% include ../common/common-nav.ejs %>
     <article>
+        <% if (msg_exist) { %>
+            <p class="msg"><%= msg %></p>
+        <% } %>
         <form method="POST" action="/login">
-            <div>名前:
-                <input type="text" name="name">
-                <input type="text" name="pw">
-                <input type="submit" name="submit" value="POST">
+            <div class="formWrapper">
+                <div class="nameForm">
+                    <span>Name:</span><input type="text" name="name">
+                </div>
+                <div class="passForm">
+                    <span>Pass:</span></span><input type="text" name="pw">
+                </div>
+                <!--input type="submit" name="submit" value="POST"-->
+                <div class="buttonForm clearfix">
+                    <button class="regist" type="submit" name="submit" value="regist">新規作成</button>
+                    <button class="login" type="submit" name="submit" value="login">ログイン</button>
+                <div>
             </div>
         </form>
 
