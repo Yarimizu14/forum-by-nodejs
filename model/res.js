@@ -1,7 +1,6 @@
 var db    = require('./database'),
     async = require('async');
 
-
 // スレッドデータを扱うオブジェクト
 function ResDB() {};
 
@@ -16,9 +15,9 @@ ResDB.prototype.createRes = function(q_data, callback) {
     this.query(q_str, void 0, function (err, results, fields) {
         if (err) {
             throw err;
-            res.redirect("/error");
+            callback.error();
         } else {
-            callback(results);
+            callback.success(results);
         }
     });
 }
@@ -35,39 +34,33 @@ ResDB.prototype.createResForAjax = function(q_data, callback) {
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
-                    res.redirect("/error");
                 } else {
                     cbk(null, results);
                 }
             });
         },
         function(results, cbk) {
-            console.log(results);
             var q_str = 'SELECT users.name, users.user_id, res.res_id, res.body, DATE_FORMAT(res.created, "%Y-%m-%d %k:%i:%s") FROM res INNER JOIN users ON res.user_id=users.user_id AND res.thread_id=' + q_data.thread_id + ' AND users.user_id=' + q_data.user_id + ' ORDER BY res.created DESC;';
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
-                    res.redirect("/error");
                 } else {
-                    console.log(results);
                     cbk(null, results);
                 };
             });
-
         }
     ], function(err, results) {
         if (err) {
             throw err;
-            res.redirect("/error");
+            callback.error();
         } else {
-            callback(results);
+            callback.success(results);
         }
     });
 }
 
-
 /*
- * deleteRes 
+ * deleteRes
  * 指定したレスを削除する 
  * */ 
 ResDB.prototype.deleteRes = function(q_data, callback) {
@@ -78,7 +71,6 @@ ResDB.prototype.deleteRes = function(q_data, callback) {
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
-                    res.redirect("/error");
                 } else {
                     cbk(null, results);
                 };
@@ -89,7 +81,6 @@ ResDB.prototype.deleteRes = function(q_data, callback) {
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
-                    res.redirect("/error");
                 } else {
                     cbk(null, results);
                 };
@@ -98,9 +89,9 @@ ResDB.prototype.deleteRes = function(q_data, callback) {
     }, function(err, results) {
         if (err) {
             throw err;
-            res.redirect("/error");
+            callback.error();
         } else {
-            callback(results);
+            callback.success(results);
         }
     });
 }
@@ -115,11 +106,9 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
         //スレッドの情報を取得
         getThreadInfo : function(cbk) {
             var q_str = 'SELECT threads.title, threads.description FROM threads WHERE threads.thread_id=' + q_data.thread_id + ';'
-
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
-                    res.redirect("/error");
                 } else {
                     cbk(null, results);
                 };
@@ -131,9 +120,7 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
-                    res.redirect("/error");
                 } else {
-                    console.log(results);
                     cbk(null, results);
                 };
             });
@@ -143,11 +130,8 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
             if (q_data.user_id) {   //ユーザーがログインしている場合
                 var q_str = 'SELECT res_id FROM favorites WHERE user_id=' + q_data.user_id + ' AND thread_id=' + q_data.thread_id + ';';
                 self.query(q_str, void 0, function (err, results, fields) {
-                    console.log("favorite res in this thread");
-                    console.log(results);
                     if (err) {
                         throw err;
-                        res.redirect("/error");
                     } else {
                         cbk(null, results);
                     };
@@ -160,35 +144,31 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
         getFavoriteNum  : function(cbk) {
             var q_str = 'SELECT res_id, count(res_id) FROM favorites WHERE thread_id=' + q_data.thread_id + ' GROUP BY res_id;';
             self.query(q_str, void 0, function (err, results, fields) {
-                console.log("favorite num in this thread");
-                console.log(results);
                 if (err) {
                     throw err;
-                    res.redirect("/error");
                 } else {
                     cbk(null, results);
                 };
             });
         }
-
     }, function(err, results) {
-        /*
-         * ここでエラー処理をする
-         */
         if (err) {
             throw error;
-            res.redirect("/error");
+            callback.error();
         } else {
            var resList      = results.getResInfo,
                favoriteList = results.getFavoriteInfo;
                favoriteNum  = results.getFavoriteNum;
+
             for(var i=0, len_i=resList.length; i<len_i; i++) {
+                // 各レスに既にイイネしているか否かの情報を付加
                 resList[i].favorite = false;
                 for(var j=0, len_j=favoriteList.length; j<len_j; j++) {
                     if(favoriteList[j].res_id === resList[i].res_id) {
                         resList[i].favorite = true;
                     };
                 };
+                // 各レスについているイイネの情報を付加
                 resList[i].favoriteNum = 0;
                 for(var k=0, len_k=favoriteNum.length; k<len_k; k++) {
                     if(favoriteNum[k].res_id === resList[i].res_id) {
@@ -196,14 +176,14 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
                     };
                 }
             };
-            callback({
+            callback.success({
                 user_id    : q_data.user_id,
                 thread_id  : q_data.thread_id,
                 title      : results.getThreadInfo[0].title,
                 description: results.getThreadInfo[0].description,
                 res        : resList
             });
-        }
+        };
     });
 };
 

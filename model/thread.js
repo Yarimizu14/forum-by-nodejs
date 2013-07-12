@@ -10,9 +10,15 @@ ThreadDB.prototype = db.createClient();
  * 全てのスレッドを追加する関数 
  */
 ThreadDB.prototype.getAllThreads = function(callback) {
+
     var q_str = "SELECT * FROM threads";
     this.query(q_str, void 0, function (err, results, fields) {
-        callback(results);
+        if (err) {
+            throw err;
+            callback.error(results);
+        } else {
+            callback.success(results);
+        }
    });
 };
 
@@ -21,11 +27,14 @@ ThreadDB.prototype.getAllThreads = function(callback) {
  *  新しいスレッドを追加する関数 
  */
 ThreadDB.prototype.createThread = function(q_data, callback) {
-    var q_str = 'INSERT INTO threads (user_id, category_id, title, description, created, updated) VALUES (' + q_data.user_id + ',' + q_data.category_id + ',"' + q_data.title + '","' + q_data.description + '", now(), now());'
 
+    var q_str = 'INSERT INTO threads (user_id, category_id, title, description, created, updated) VALUES (' + q_data.user_id + ',' + q_data.category_id + ',"' + q_data.title + '","' + q_data.description + '", now(), now());'
     this.query(q_str, void 0, function (err, results, fields) {
-        console.log(results);
-        callback(results);
+        if (err) {
+            callback.error(results);
+        } else {
+            callback.success(results);
+        };
    });
 }
 

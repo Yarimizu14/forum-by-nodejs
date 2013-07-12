@@ -1,6 +1,6 @@
 
 /*
- * GET users listing.
+ * GET favorite listing.
  */
 
 exports.list = function(req, res){
