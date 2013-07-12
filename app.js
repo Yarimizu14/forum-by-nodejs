@@ -33,6 +33,10 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+app.use(function(req, res) {
+    res.redirect('/error');
+});
+
 app.get('/', routes.index);
 
 //ログイン画面
