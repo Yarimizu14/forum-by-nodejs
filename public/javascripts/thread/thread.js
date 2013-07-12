@@ -18,8 +18,11 @@ $(function() {
                 }
             })
             .done(function(data) {
+                var res_num_elem = $("#thread .thread_res span");
+                var res_num = +(res_num_elem.text());
+                res_num_elem.text((--res_num) + '');
+
                 holder.fadeOut("slow");
-                console.log(data);
             })
             .fail(function() {alert("failed");});
         } else {
@@ -89,7 +92,10 @@ $(function() {
             }
         })
         .done(function(data) {
-            console.log(data);
+            var res_num_elem = $("#thread .thread_res span");
+            var res_num = +(res_num_elem.text());
+            res_num_elem.text((++res_num) + '');
+
             var res = data.response[0];
             var newRes = $('<li class="resList_each res" data-id="' + res.res_id  + '" data-favorite="false" data-self="true"><p class="res_main">' + res.body + '</p><ul class="res_sub clearfix"><li class="res_sub_name">' + res.name + '</li><li class="res_sub_time">' + res['DATE_FORMAT(res.created, "%Y-%m-%d %k:%i:%s")'] + '</li><li class="res_sub_favorite_num">0</li><li class="res_sub_favorite"><img class="img_favorite" src="/images/8_heart_stroke.png"></li><li class="res_sub_del"><img class="img_del" src="/images/7_batsu.png"></li></ul></li>');
             newRes.hide();
