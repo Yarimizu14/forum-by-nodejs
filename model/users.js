@@ -1,7 +1,9 @@
 var db  = require('./database'),
-    async = require('async');
+    async = require('async'),
+    escaperFactory = require('../util/escaper');
 
-// ユーザーデータを扱うオブジェクト
+var escaper = escaperFactory.createEscaper();
+
 function UserDB() {};
 
 UserDB.prototype = db.createClient();
