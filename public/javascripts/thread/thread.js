@@ -2,7 +2,7 @@
 
 $(function() {
 
-    $(".resList_each .res_sub_del").on("click", function(evt) {
+    var delete_res = function(evt) {
         if (!checkLoginStatus()) return;
 
         var $this  = $(this);
@@ -28,9 +28,11 @@ $(function() {
         } else {
             alert("他人の投稿は消せません");
         }
-    });
+    }
+    $(".resList_each .res_sub_del").on("click", delete_res);
 
-    $(".resList_each .img_favorite").on("click", function(evt) {
+
+    var change_fav = function(evt) {
         if (!checkLoginStatus()) return;
 
         var $this  = $(this);
@@ -77,9 +79,10 @@ $(function() {
                 alert("failed");
             });
         };
-    });
+    }
+    $(".resList_each .img_favorite").on("click", change_fav);
 
-    $("#createRes").on("click", function(evt) {
+    var create_res = function(evt) {
         evt.preventDefault();
         if (!checkLoginStatus()) return;
 
@@ -98,14 +101,16 @@ $(function() {
 
             var res = data.response[0];
             var newRes = $('<li class="resList_each res" data-id="' + res.res_id  + '" data-favorite="false" data-self="true"><p class="res_main">' + res.body + '</p><ul class="res_sub clearfix"><li class="res_sub_name">' + res.name + '</li><li class="res_sub_time">' + res['DATE_FORMAT(res.created, "%Y-%m-%d %k:%i:%s")'] + '</li><li class="res_sub_favorite_num">0</li><li class="res_sub_favorite"><img class="img_favorite" src="/images/8_heart_stroke.png"></li><li class="res_sub_del"><img class="img_del" src="/images/7_batsu.png"></li></ul></li>');
+
+            newRes.find(".img_favorite").on("click", change_fav);
+            newRes.find(".res_sub_del").on("click", delete_res);
             newRes.hide();
             $("#resList").append(newRes);
             newRes.fadeIn("slow");
         })
         .fail(function() {alert("failed");});
-
-
-    });
+    };
+    $("#createRes").on("click", create_res);
 
     function checkLoginStatus() {
         var loginStatus = $("#loginStatus").val();
