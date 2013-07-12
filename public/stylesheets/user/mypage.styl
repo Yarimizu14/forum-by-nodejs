@@ -1,3 +1,11 @@
+my_black = #333
+my_gray  = #BBB
+
+section-line() 
+    border-bottom solid 1px #d8d8d8
+    box-shadow 0px 2px 0px #FFF
+    -webkit-box-shadow 0px 2px 0px #FFF
+
 button-size(w, h)
     width w
     height h
@@ -16,5 +24,71 @@ button.logoutBtn
     button-gradient()
     button-shadow()
     margin-top 60px
+
+#userName
+    font-size 20px
+    text-align center
+    font-weight bold
+    margin-top 65px
+    padding-bottom 10px
+    section-line()
+
+.title
+    font-size 12px
+    text-align center
+    padding 5px 0
+    section-line()
+    /* background #74B6CC */
+    background rgba(130, 185, 204, 0.4)
+
+ul#resList
+    li.resList_each
+        width 100%
+        padding-bottom 10px
+        section-line()
+
+sub-height = 30px
+.res
+
+    > * 
+        margin 0 5px
+
+    .res_main
+        margin-top 10px
+        font-size 18px
+        color my_black
+
+    .res_sub
+        margin-top 5px
+        font-size 15px
+        line-height sub-height
+        color my_gray
+
+        > li
+            height sub-height
+
+        .res_sub_name
+        .res_sub_time
+            float left
+            margin-right 15px
+
+        .res_sub_time
+            font-size 12px
+
+        .res_sub_favorite_num
+        .res_sub_favorite
+        .res_sub_del
+            float right
+            margin-right 10px
+
+        .res_sub_favorite
+            img.img_favorite
+                vertical-align middle
+                width sub-height - 8px
+
+        .res_sub_del
+            img.img_del
+                vertical-align middle
+                width sub-height - 10px
 
 

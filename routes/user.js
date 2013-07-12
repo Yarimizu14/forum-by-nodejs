@@ -2,6 +2,14 @@ var userModel   = require('../model/users.js');
 
 var users   = userModel.createUserDB();
 
+var callback = {
+    success : function(data) {
+    },
+    error : function(data) {
+        res.redirect('/error');
+    }
+};
+
 /*
  * referLoginForm
  * ログイン画面を表示する
@@ -59,16 +67,21 @@ exports.authorize = function(req, res) {
  * GET /mypage
  */
 exports.referMypage = function(req, res) {
-    var loginStatus,
-        user_id;
+    console.log(req.session.hasOwnProperty("user"));
+    var user_id = req.param('user_id') || ((req.session.hasOwnProperty("user")) ? req.session.user.user_id : null);
 
-    if (!req.session.user) {   //ログインしていない場合
-        loginStatus = false;
+    if (!user_id) {
         res.render('user/user_login', { msg_exist : false, msg : "" });
-    } else {     //ログインしている場合
-        loginStatus = true;
-        user_id = req.session.user.user_id;
-        res.render('user/mypage', { });
+    } else {
+        var q_data = {
+            user_id : user_id
+        };
+
+        callback.success = function(data) {
+            console.log(data);
+            res.render('user/mypage', data);
+        };
+        users.getMypage(q_data, callback);
     };
 }
 

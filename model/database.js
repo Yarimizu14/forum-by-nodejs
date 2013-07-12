@@ -13,7 +13,7 @@ function Database() {
 Database.prototype.dbAuth = config.databaseAuth;
 
 Database.prototype._getClient = function() {
-    if (this.client === undefined) {
+    if (this.client === void 0) {
         this.client = mysql.createConnection(this.dbAuth);
     }
     return this.client;
