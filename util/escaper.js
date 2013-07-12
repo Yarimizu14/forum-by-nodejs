@@ -33,12 +33,11 @@ Escaper.prototype.unescape = function(str) {
  */
 Escaper.prototype.escapeObj = function(obj) {
 
+    /*
     if (obj.hasOwnProperty("length")) {      //配列の場合
         for(var i=0, len=obj.length; i<len; i++) {
             if (typeof obj[i] == "string") {
-                //obj[i] = this.escape(obj[i]);
                 obj[i] = escape(obj[i]);
-                console.log("配列をエスケープ中");
             } else if (typeof obj[i] == "object") {
                 this.escapeObj(Obj[i]);
             };
@@ -46,14 +45,13 @@ Escaper.prototype.escapeObj = function(obj) {
    } else {
         for(var key in obj) {
             if (typeof obj[key] == "string") {
-                //obj[key] = this.escape(obj[key]);
                 obj[key] = escape(obj[key]);
-                console.log("Objectをエスケープ中");
             } else if (typeof obj[i] == "object") {
                 this.escapeObj(Obj[key]);
             };
         };
     };
+   */
 }
 
 /*
@@ -61,33 +59,27 @@ Escaper.prototype.escapeObj = function(obj) {
  * オブジェクトの中の全ての文字列をアンエスケープ
  */
 Escaper.prototype.unescapeObj = function(obj) {
-    console.log("今からアンエスケープ");
+
+   /* 
     if (obj.hasOwnProperty("length")) {      //配列の場合
-        console.log("アンエスケープで配列を処理");
         for(var i=0, len=obj.length; i<len; i++) {
             if (typeof obj[i] == "string") {
-                //obj[i] = this.unescape(obj[i]);
                 obj[i] = unescape(obj[i]);
-                console.log("配列をアンエスケープ中");
             } else if (typeof obj[i] == "object") {
-                this.unescapeObj(obj[i]);
+                this.escapeObj(obj[i]);
             };
         };
    } else {
-        console.log("アンエスケープでオブジェクトを処理");
-        console.log(obj);
         console.log(typeof obj[key]);
         for(var key in obj) {
-            console.log(typeof obj[key]);
             if (typeof obj[key] == "string") {
-                //obj[key] = this.unescape(obj[key]);
                 obj[key] = unescape(obj[key]);
-                console.log("Objectをアンエスケープ中");
             } else if (typeof obj[i] == "object") {
                 this.unescapeObj(Obj[key]);
             };
         };
     };
+   */
 }
 
 function createEscaper() {

@@ -14,7 +14,7 @@ ThreadDB.prototype = db.createClient();
  */
 ThreadDB.prototype.getAllThreads = function(callback) {
 
-    var q_str = "SELECT * FROM threads";
+    var q_str = "SELECT * FROM threads;";
     this.query(q_str, void 0, function (err, results, fields) {
         if (err) {
             throw err;

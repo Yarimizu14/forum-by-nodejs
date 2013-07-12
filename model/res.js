@@ -168,7 +168,8 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
             throw error;
             callback.error();
         } else {
-            escaper.unescapeObj(results);
+            console.log("アンエスケープ確認");
+           //escaper.unescapeObj(results);
            var resList      = results.getResInfo,
                favoriteList = results.getFavoriteInfo;
                favoriteNum  = results.getFavoriteNum;
@@ -189,6 +190,8 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
                     };
                 }
             };
+           escaper.unescapeObj(results.getThreadInfo[0]);
+
             callback.success({
                 user_id    : q_data.user_id,
                 thread_id  : q_data.thread_id,
