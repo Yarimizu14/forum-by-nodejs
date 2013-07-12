@@ -60,7 +60,7 @@ UserDB.prototype.getMypage = function(q_data, callback) {
             });
          },
          getUserName : function(cbk) {
-            var q_str = 'SELECT name FROM users WHERE user_id=' + q_data.user_id + ";";
+            var q_str = 'SELECT user_id, name FROM users WHERE user_id=' + q_data.user_id + ";";
             self.query(q_str, void 0, function (err, results, fields) {
                 if (err) {
                     throw err;
@@ -75,6 +75,7 @@ UserDB.prototype.getMypage = function(q_data, callback) {
             callback.error(results);
         } else {
             var data = {
+                ownUser_id : q_data.ownUser_id,
                 userName : results.getUserName[0],
                 resList  : results.getPostedRes
             };

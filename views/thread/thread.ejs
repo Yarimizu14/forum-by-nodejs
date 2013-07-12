@@ -24,7 +24,7 @@
                 <li class="resList_each res" data-id="<%= res[i].res_id %>" data-favorite="<%= res[i].favorite %>" data-self="<%= self %>">
                         <p class="res_main"><%= res[i].body %></p>
                         <ul class="res_sub clearfix">
-                            <li class="res_sub_name"><%= res[i].name %></li>
+                            <li class="res_sub_name"><a href="/mypage?user_id=<%= res[i].user_id %>"><%= res[i].name %></a></li>
                             <li class="res_sub_time"><%= res[i]['DATE_FORMAT(res.created, "%Y-%m-%d %k:%i:%s")'] %></li>
                             <li class="res_sub_favorite_num"><%= res[i].favoriteNum %></li>
                             <li class="res_sub_favorite">

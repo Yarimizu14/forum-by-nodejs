@@ -11,6 +11,7 @@
         <p class="title">コメント履歴</p>
         <ul id="resList">
         <% for (var i=0, len=resList.length; i<len; i++) { %>
+            <a href="/thread/thread?thread_id=<%= resList[i].thread_id %>">
             <li class="resList_each res">
                 <ul class="res_sub clearfix">
                     <li class="res_sub_name">掲示板名:&nbsp;<%= resList[i].title %></li>
@@ -18,12 +19,14 @@
                 </ul>
                 <p class="res_main"><%= resList[i].body %></p>
             </li>
+            </a>
         <% } %>
         </ul>
-        <form method="post" action="/logout">
-            <button class="logoutBtn" type="submit" name="submit" value="POST">ログアウト</button>
-        </form>
-
+        <% if (ownUser_id === userName.user_id ) { %>
+            <form method="post" action="/logout">
+                <button class="logoutBtn" type="submit" name="submit" value="POST">ログアウト</button>
+            </form>
+        <% } %>
     </artilce>
     <% include ../common/common-foot.ejs %>
   </body>

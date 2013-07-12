@@ -91,6 +91,7 @@ exports.referThread = function(req, res) {
     };
 
     callback.success = function(results) {
+        console.log(results);
         if(Object.keys(results).length) {
             results.loginStatus = loginStatus;
             res.render('thread/thread', results);
