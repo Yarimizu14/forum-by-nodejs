@@ -39,7 +39,7 @@ exports.authorize = function(req, res) {
         success : function(user_info) {
             //ユーザー情報を保持
             req.session.user = user_info;
-            res.redirect('/thread/list');
+            res.redirect('/mypage');
         },
         error : error_callback
     };
