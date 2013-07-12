@@ -25,7 +25,6 @@ exports.referThreadList = function(req, res) {
         var data = {
             threads : threads
         };
-        console.log(data);
         res.render('thread/thread_list', data);
     };
     threads.getAllThreads(callback);

@@ -13,12 +13,14 @@ UserDB.prototype = db.createClient();
  *  ユーザーを追加する関数 
  */
 UserDB.prototype.createUser = function(name, pw, callback) {
+    escaper.escapeObj({ name : name, pw : pw });
     var q_str = 'INSERT INTO users (name, pw, created) VALUES ("' + name + '", "' + pw + '", now());';
     this.query(q_str, void 0, function (err, results, fields) {
         if (err) {
            throw err; 
             callback.error();
         } else {
+            escaper.unescapeObj(results);
             callback.success(results);
         };
     });
@@ -29,6 +31,7 @@ UserDB.prototype.createUser = function(name, pw, callback) {
  *  パスワードを確認する関数
  */
 UserDB.prototype.authorizeUser = function(name, pw, callback) {
+    escaper.escapeObj({ name : name, pw : pw });
     var q_str = 'SELECT * FROM users WHERE name="' + name + '";';
     this.query(q_str, void 0, function (err, results, fields) {
         if (err) {
@@ -38,6 +41,7 @@ UserDB.prototype.authorizeUser = function(name, pw, callback) {
             if(results[0] !==  void 0 && results[0].pw === pw) {    //ログイン成功時 
                 callback.success(results[0]);
             } else {                                                 //ログイン失敗時
+            escaper.unescapeObj(results);
                 callback.error();
             };
         }
@@ -49,6 +53,7 @@ UserDB.prototype.authorizeUser = function(name, pw, callback) {
  * マイページを表示する関数 
  */
 UserDB.prototype.getMypage = function(q_data, callback) {
+    escaper.escapeObj(q_data);
     var self = this;
     async.parallel({
          getPostedRes : function(cbk) {
@@ -76,6 +81,7 @@ UserDB.prototype.getMypage = function(q_data, callback) {
             throw err;
             callback.error(results);
         } else {
+            escaper.unescapeObj(results);
             var data = {
                 ownUser_id : q_data.ownUser_id,
                 userName : results.getUserName[0],

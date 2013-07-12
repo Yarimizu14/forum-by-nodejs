@@ -1,5 +1,8 @@
 var db    = require('./database'),
-    async = require('async');
+    async = require('async'),
+    escaperFactory = require('../util/escaper');
+
+var escaper = escaperFactory.createEscaper();
 
 // スレッドデータを扱うオブジェクト
 function ResDB() {};
@@ -11,12 +14,14 @@ ResDB.prototype = db.createClient();
  *  新しいレスを追加する関数 
  */
 ResDB.prototype.createRes = function(q_data, callback) {
+    escaper.escapeObj(q_data);
     var q_str = 'INSERT INTO res (user_id, thread_id, body, created) VALUES (' + q_data.user_id + ', ' + q_data.thread_id + ', "' + q_data.body + '", now())';
     this.query(q_str, void 0, function (err, results, fields) {
         if (err) {
             throw err;
             callback.error();
         } else {
+            escaper.unescapeObj(results);
             callback.success(results);
         }
     });
@@ -27,6 +32,7 @@ ResDB.prototype.createRes = function(q_data, callback) {
  * 指定したレスを削除する 
  * */ 
 ResDB.prototype.createResForAjax = function(q_data, callback) {
+    escaper.escapeObj(q_data);
     var self = this;
     async.waterfall([
         function(cbk) {
@@ -35,6 +41,7 @@ ResDB.prototype.createResForAjax = function(q_data, callback) {
                 if (err) {
                     throw err;
                 } else {
+            escaper.unescapeObj(results);
                     cbk(null, results);
                 }
             });
@@ -45,6 +52,7 @@ ResDB.prototype.createResForAjax = function(q_data, callback) {
                 if (err) {
                     throw err;
                 } else {
+            escaper.unescapeObj(results);
                     cbk(null, results);
                 };
             });
@@ -54,6 +62,7 @@ ResDB.prototype.createResForAjax = function(q_data, callback) {
             throw err;
             callback.error();
         } else {
+            escaper.unescapeObj(results);
             callback.success(results);
         }
     });
@@ -64,6 +73,7 @@ ResDB.prototype.createResForAjax = function(q_data, callback) {
  * 指定したレスを削除する 
  * */ 
 ResDB.prototype.deleteRes = function(q_data, callback) {
+    escaper.escapeObj(q_data);
     var self = this;
     async.parallel({
          deleteRes : function(cbk) {
@@ -91,6 +101,7 @@ ResDB.prototype.deleteRes = function(q_data, callback) {
             throw err;
             callback.error();
         } else {
+            escaper.unescapeObj(results);
             callback.success(results);
         }
     });
@@ -101,6 +112,7 @@ ResDB.prototype.deleteRes = function(q_data, callback) {
  * 指定したスレッドの全てのコメントを取得する関数 
  */ 
 ResDB.prototype.getResByThread = function(q_data, callback) {
+    escaper.escapeObj(q_data);
     var self = this;
     async.parallel({
         //スレッドの情報を取得
@@ -156,6 +168,7 @@ ResDB.prototype.getResByThread = function(q_data, callback) {
             throw error;
             callback.error();
         } else {
+            escaper.unescapeObj(results);
            var resList      = results.getResInfo,
                favoriteList = results.getFavoriteInfo;
                favoriteNum  = results.getFavoriteNum;
