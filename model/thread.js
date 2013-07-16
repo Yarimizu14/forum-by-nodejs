@@ -32,13 +32,12 @@ ThreadDB.prototype.getAllThreads = function(callback) {
  */
 ThreadDB.prototype.createThread = function(q_data, callback) {
 
-    escaper.escapeObj(q_data);
-    var q_str = 'INSERT INTO threads (user_id, category_id, title, description, created, updated) VALUES (' + q_data.user_id + ',' + q_data.category_id + ',"' + q_data.title + '","' + q_data.description + '", now(), now());'
-    this.query(q_str, void 0, function (err, results, fields) {
+    //var q_str = 'INSERT INTO threads (user_id, category_id, title, description, created, updated) VALUES (' + this.escape(q_data.user_id) + ',' + this.escape(q_data.category_id) + ',"' + this.escape(q_data.title) + '","' + this.escape(q_data.description) + '", now(), now());'
+    var q_str = 'INSERT INTO threads (user_id, category_id, title, description, created, updated) VALUES (? , ? ,  ?, ?, now(), now());'
+    this.query(q_str, q_data, function (err, results, fields) {
         if (err) {
             callback.error(results);
         } else {
-            escaper.unescapeObj(results);
             callback.success(results);
         };
    });

@@ -54,12 +54,12 @@ exports.createThread = function(req, res){
     var title       = req.param("title");
     var description = req.param("description");
 
-    var q_data = {
-        user_id   : req.session.user.user_id,
-        category_id : category_id,
-        title   : title,
-        description : description,
-    };
+    var q_data = [
+        req.session.user.user_id,
+        category_id,
+        title,
+        description,
+    ];
 
     callback.success = function(results) {
         res.redirect('thread/list');

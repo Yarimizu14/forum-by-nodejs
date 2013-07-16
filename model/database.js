@@ -25,6 +25,7 @@ Database.prototype._getClient = function() {
  */
 Database.prototype.query = function(query, params, callback) {
     var client = this._getClient();
+    client.on('end', this.end)
     console.log(query);
     return client.query(query, params, callback);
 };
@@ -36,6 +37,7 @@ Database.prototype.query = function(query, params, callback) {
 Database.prototype.end = function(callback) {
     if (this.client) {
         this.client.end(callback);
+        console.log("query End");
         delete this.client;
     };
 };

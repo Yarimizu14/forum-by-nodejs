@@ -36,10 +36,15 @@ exports.authorize = function(req, res) {
 
     //ログイン時のコールバック
     var auth_callback = {
-        success : function(user_info) {
-            //ユーザー情報を保持
-            req.session.user = user_info;
-            res.redirect('/mypage');
+        success : function(results) {
+            if(results[0] !==  void 0 && results[0].pw === pw) {    //ログイン成功時 
+                console.log("hoge");
+                //ユーザー情報を保持
+                req.session.user = results[0];
+                res.redirect('/mypage');
+            } else {
+                res.render('user/user_login', { msg_exist : true, msg : "Failed, try again" });
+            };
         },
         error : error_callback
     };
@@ -54,10 +59,17 @@ exports.authorize = function(req, res) {
 
     if (type === "regist") {
         //新規ユーザー作成
-        users.createUser(name, pw, create_callback);
+        var q_data = [
+            name,
+            pw
+        ];
+        users.createUser(q_data, create_callback);
     } else if (type === "login") {
         //認証処理
-        users.authorizeUser(name, pw, auth_callback);
+        var q_data = [
+            name
+        ];
+        users.authorizeUser(q_data, auth_callback);
     }
 };
 
@@ -81,7 +93,6 @@ exports.referMypage = function(req, res) {
         };
 
         callback.success = function(data) {
-            console.log(data);
             res.render('user/mypage', data);
         };
         users.getMypage(q_data, callback);
